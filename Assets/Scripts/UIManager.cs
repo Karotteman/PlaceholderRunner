@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     Text[] scoreTexts;
     Text finalText;
     Text timeText;
+    int lastLvl = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -39,23 +40,32 @@ public class UIManager : MonoBehaviour
         deathPanel.SetActive(true);
     }
 
-    public void ScoreUpdate(Char[] scores, string time)
+    public void ScoreUpdate(int score, string time, int level)
     {
-        int i = scores.Length-1;
+        Char[] scoreCharTab = score.ToString().ToCharArray();
+        int i = scoreCharTab.Length-1;
 
         foreach(Text scoreDecimal in scoreTexts)
         {
-            if(i>=0)
+            scoreDecimal.GetComponent<Animator>().SetBool("NewDifficulty", false);
+
+            if (i>=0)
             {
-                if (scores[i].ToString() != scoreDecimal.text)
+                if (scoreCharTab[i].ToString() != scoreDecimal.text)
                 {
-                    scoreDecimal.text = scores[i].ToString();
+                    scoreDecimal.text = scoreCharTab[i].ToString();
                     scoreDecimal.GetComponent<Animator>().SetBool("ScoreChange", true);
                 }
                 else
                 {
                     scoreDecimal.GetComponent<Animator>().SetBool("ScoreChange", false);
                 }
+            }
+            if (level != lastLvl)
+            {
+                scoreDecimal.GetComponent<Animator>().SetBool("ScoreChange", false);
+                scoreDecimal.GetComponent<Animator>().SetBool("NewDifficulty", true);
+                lastLvl = level;
             }
 
             i--;

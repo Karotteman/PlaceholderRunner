@@ -84,7 +84,7 @@ public class PlayerMouvement : MonoBehaviour
                 audioSource.PlayOneShot(leftAudio);
             }
 
-            transform.Rotate(transform.forward, rotaionSpeed * axis, Space.World);
+            transform.Rotate(transform.forward, (rotaionSpeed * axis)*Time.deltaTime, Space.World);
         }
     }
 

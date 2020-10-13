@@ -3,7 +3,6 @@
 public class PlayerCollision : MonoBehaviour
 {
     public GameManager gameManager;
-    public LevelManager levelManager;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,7 +10,6 @@ public class PlayerCollision : MonoBehaviour
         {
             other.gameObject.GetComponent<AudioSource>().Play();
             gameManager.Score++;
-            levelManager.maxDanger += .5f;
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
         else if(other.gameObject.tag == "KillZone")
